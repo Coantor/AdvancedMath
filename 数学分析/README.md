@@ -14,26 +14,26 @@
 
 1. Wallis 公式的渐进估计。见`Wallis.R`。
 
-   ![Wallis渐进估计](picture\Wallis公式.png)
+   ![Wallis渐进估计](https://gitee.com/cantour123/AdvancedAlgebra/blob/master/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/picture/Wallis公式.png)
 
 2. 一个可微函数在某点导数大于0，但是在附近任意小的区间上函数都不单调。见`单调函数经典反列.R`。
 
-   ![单调函数经典反列](picture\单调函数经典反列.png)
+   ![单调函数经典反列](https://gitee.com/cantour123/AdvancedAlgebra/blob/master/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/picture/单调函数经典反列.png)
 
 3. `Riemann`函数的可视化实现。见`Riemann.R`，其中`Max_CommonFactor.cpp`是辅助函数,用`C++`实现代码加速功能。
 
-   ![Riemann函数](picture\Riemann函数.png)
+   ![Riemann函数](https://gitee.com/cantour123/AdvancedAlgebra/blob/master/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/picture/Riemann函数.png)
 
 4. 基础三角函数的图像绘制，包括(3 (sin、cox、tan) +  3(倒数)  + 3(反函数))。
 
-   ![基础三角函数图像](picture\基础三角函数图像.png)
+   ![基础三角函数图像](https://gitee.com/cantour123/AdvancedAlgebra/blob/master/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/picture/基础三角函数图像.png)
 
 5. 一个经典的收敛反常积分，但是无穷远处极限不为0。(甚至这个函数的上极限为$+\infty$)。见`反常积分.R`。
 
-   ![经典反常积分收敛的反列1](picture\反常积分经典反列1.png)
+   ![经典反常积分收敛的反列1](https://gitee.com/cantour123/AdvancedAlgebra/blob/master/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/picture/反常积分经典反列1.png)
 
-   ![经典反常积分收敛的反列2](picture\反常积分经典反列2.png)
+   ![经典反常积分收敛的反列2](https://gitee.com/cantour123/AdvancedAlgebra/blob/master/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/picture/反常积分经典反列2.png)
 
 6. 收敛的迭代系统得到的迭代点列$\{x_{n}\}$只有两种结果，单调或者分奇偶单调。见`迭代函数系统(part1).R`。
 
-   ![迭代序列收敛系统1](picture\迭代函数迭代系统1.png)
+   ![迭代序列收敛系统1](https://gitee.com/cantour123/AdvancedAlgebra/blob/master/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/picture/迭代函数迭代系统1.png)
