@@ -1,4 +1,5 @@
 library(R6)
+library(stringi) #字符串处理包
 Poly <- R6Class(
   classname = "Poly", #定义一个多项式类
 
@@ -7,10 +8,20 @@ Poly <- R6Class(
     deg = NA,
     initialize  = function(vec){
       self$vec = vec #比如vec=c(1,2,3),则x^2 + 2* x + 3
-      if(length(vec) == 1 & vec[1] == 0){  
+      if(length(vec) == 1 && vec[1] == 0){  
         self$deg = -Inf #否则定义为零多项式
-      }else {
-        self$deg = length(vec) - 1 #正常的次数定义
+      }else if(all(vec == 0)){
+        self$vec = 0
+        self$deg = -Inf
+      }
+      else {
+        self$deg = length(vec) - 1
+        ## 清除开始的零元素
+        while( self$vec[self$deg+1] == 0 ){
+          self$vec = self$vec[1:self$deg]
+          self$deg = self$deg - 1
+        }
+         #正常的次数定义
       }
     },
     ## 泛函
@@ -22,6 +33,20 @@ Poly <- R6Class(
       cat(paste(strs,sep = "  "), '\n')
       cat(paste(round(self$vec,3),collapse = "      "),"\n")
       }
+    },
+    ## 转化为字符串
+    to_str = function(){
+      strs = NULL
+      if(self$deg == -Inf){
+        strs = "0"
+      }else{
+        strs = paste(round(self$vec,3),collapses = paste("x^","(",collapses = 0:self$deg,") +",sep = ""))
+        strs = str_flatten(strs)
+        
+        strs = str_remove(strs,"x\\^\\(0\\)") #去掉常数项
+        strs = str_sub(strs,end = "-2") #去掉最后一个+
+        }
+      return(strs)
     }
 )
 )
@@ -29,7 +54,7 @@ mutiply = function(one,ano_poly){
   m = one$deg + 1
   n = ano_poly$deg + 1
   new_ploy = Poly$new(0)
-  if(m != -Inf & n != -Inf)
+  if(m != -Inf && n != -Inf)
   { 
     new_ploy$deg =m + n- 2 #公式
     #计算多项式的系数
@@ -87,7 +112,7 @@ mins = function(one,ano_poly){
 division = function(one,ano_poly){
   m = one$deg + 1
   n = ano_poly$deg + 1 
-  if(m == -Inf | n == -Inf){
+  if(m == -Inf || n == -Inf){
     stop("除法的特殊情况")
   }
   if(m < n){
