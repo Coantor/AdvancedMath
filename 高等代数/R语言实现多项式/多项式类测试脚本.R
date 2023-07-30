@@ -20,7 +20,7 @@ print(Q[[1]])
 
 print(Q[[2]])
 
-## 最大公因式
+## 最大公因式,结果每一个问题
 q1 = Poly$new(c(-1,2,-1,-1,1))
 q2 = Poly$new(c(1,-2,0,1))
 rx = Max_CommonFactor(q1,q2)

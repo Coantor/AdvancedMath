@@ -1,5 +1,5 @@
 library(R6)
-library(stringi) #字符串处理包
+library(stringr) #字符串处理包,tidyverse的子包
 Poly <- R6Class(
   classname = "Poly", #定义一个多项式类
 
@@ -24,7 +24,7 @@ Poly <- R6Class(
          #正常的次数定义
       }
     },
-    ## 泛函
+    ## R语言中的泛函
     print = function(...) {
       if(self$deg == -Inf){
         cat("0\n")
@@ -108,7 +108,7 @@ mins = function(one,ano_poly){
   return(new_ploy)
 }#减法函数
 
-
+## 带余除法
 division = function(one,ano_poly){
   m = one$deg + 1
   n = ano_poly$deg + 1 
@@ -118,13 +118,12 @@ division = function(one,ano_poly){
   if(m < n){
     q_poly = Poly$new(0)
     r_poly = one
-    }
-  else{
+    }else{
     vec_q = rep(0,m-n+1)
     last_kx = one$clone()
     for(i in (m-n+1):1){
       vec_q[i] = last_kx$vec[i-1+n]/ano_poly$vec[n]
-      last_kx = mins(last_kx,mutiply(Poly$new(vec_q),ano_poly)) #计算剩下的系数
+      last_kx = mins(one,mutiply(Poly$new(vec_q),ano_poly)) #计算剩下的系数
       if(all(last_kx$vec == 0)){
         break;
       }

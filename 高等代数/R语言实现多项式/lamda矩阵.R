@@ -1,5 +1,6 @@
 library(R6)
 source("多项式类.R")
+## 拥有一个多项式类
 LambdaMatrix <- R6Class(
   classname = "LambdaMatrix",
   public = list(
@@ -91,9 +92,27 @@ Lambda_det =  function(Lm,H = 16){#最大多项式长度为16
     }#
 }
 
-## 行列式因子
-Fac_Lambda_det <- function(Lm)
-{
-  # 计算每一阶的行列式因子
-}
+# ## 行列式因子
+# Fac_Lambda_det <- function(Lm)
+# {
+#   # 计算每一阶的行列式因子
+#   N = sqrt(length(Lm$da)) #计算方阵的长和宽
+#   Fac_Lambda = list() #保存行列式因子
+#   for(i in N:1){
+#       #可能出现的主子式,离散数学的知识,从1:N中不重样的抽取k个数组
+#        
+#       
+#       
+#   }
+#   
+# 
+# }  
+
+## 不变因子
+
+
+### 我们可以证明A 与 A' 是相似的,仅仅需要他们行列式因子一样.
+
+## 初等因子,多项式的不可约性(没有办法实现).
+
 
