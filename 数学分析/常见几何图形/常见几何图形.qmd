@@ -1,0 +1,213 @@
+---
+title: "数学分析常见几何图形"
+format: html
+editor: visual
+author: yzd
+---
+
+## 前言
+
+输出设置选项索引网站:`https://yihui.org/knitr/options/`.
+
+```{r,message=FALSE,warning=FALSE}
+library(purrr)
+library(latex2exp)
+```
+
+#### 自适应采样函数
+
+```{r}
+adapt_x <- function(N,a,b,key_point = NULL,delta = 8){
+  ## 函数说明
+  ## N表示一轮采样数
+  ## a,b分别表示起始采样点和终止采样点
+  ## key_point 表示额外需要采样的点
+  ## delta 对额外采样进行条件,数值越大,key_point附近的点越密集
+  
+  x1 = seq(a,b,len = N)
+  if(is.null(key_point)){
+    return(x1)
+  }
+  mat = matrix(0,ncol = N,nrow = length(key_point))
+  h = b-a
+  for(i in 1:nrow(mat)){
+    mat[i,] = seq(key_point[i]-h/delta,key_point[i]+h/delta,len = N)
+  }
+  dim(mat) = c(N *length(key_point),1 )
+  x = c(x1,mat)
+  return(x)
+}
+```
+
+## 1. 双扭线
+
+$$
+ r^2 = a^2cos(2\theta)
+$$
+
+#### 几何图形
+
+```{r,fig.align = "center"}
+a = 1
+N = 1000
+theta = adapt_x(N,-pi,pi,key_point = c(-pi,0,pi),5)
+r = map_dbl(theta, ~sqrt(max(0,a*a*cos(2*.x))))
+x = r * cos(theta)
+y = r * sin(theta)
+plot(x,y,cex = 0.3,pch = 16,asp = 1,main = "双纽线",
+     sub = TeX("$r^2$ = $a^2$cos($\\theta$)"),xlab = "",ylab = "")
+abline(a = 0,b = 1,col = "red",lty = 2)
+abline(a = 0,b = -1,col = "red",lty = 2)
+
+```
+
+#### 分析性质
+
+考试中最常见的形式是如何就算双纽线的面加.这里给出简短的计算流程.
+
+1.  将面加划分为两个部分,先计算右半部分.首先得到它再极坐标下的范围, $$
+    D' = \{ \frac{-\pi}{4} \le \theta \le \frac{\pi}{4},
+    0 \le r \le \sqrt{a^2cos(\theta)}
+    \}$$
+
+2.  将直角坐标系变换到极坐标系下进行计算.得到: $$\int\!\!\!\int {{\rm{d}}\sigma  = 2\int_{ - {\pi  \over {\rm{4}}}}^{{\pi  \over {\rm{4}}}} {{\rm{d}}\theta \int_0^{\sqrt {{a^{\rm{2}}}\cos (\theta )} } {rdr = } } } {a^2}$$
+
+## 2.星型线
+
+$$
+x^{\frac{2}{3}} + y^{\frac{2}{3}} = r^{\frac{2}{3}}
+$$ 做极坐标转换: $$
+x = rcos(\theta)^3,y = rsin(\theta)^3
+$$
+
+#### 几何图形
+
+```{r,fig.align = "center"}
+r = 2
+theta = adapt_x(N,-pi,pi)
+x = r * cos(theta)^3
+y = r * sin(theta)^3
+plot(x,y,cex = 0.3,pch = 16,asp = 1,main= "星型线",xlab = "",ylab = "",
+     sub = TeX("$x^{p} + y^{p} = r^{p}$"))
+```
+
+#### 拓展内容
+
+我们给出一般的图像: $$
+\left|x \right|^{p} + \left|y \right|^{p} = r^{p}
+$$ 其中p可以取任意正值.此时进行变量替换, $$
+x = rcos(\theta)^\frac{2}{p},
+y = rsin(\theta)^\frac{2}{p}
+$$ 变换替换的`Jacobi`行列式: $${{\partial (x,y)} \over {\partial (r,\theta )}} = {2 \over p}r{(\sin (\theta )cos(\theta ))^{{2 \over p} - 1}}$$
+
+#### 几何图形
+
+```{r,fig.align = "center"}
+x_05 = r *sign(cos(theta)) * abs(cos(theta))^(0.5)
+y_05 = r *sign(sin(theta)) * abs(sin(theta))^(0.5)
+
+
+x1 = r * cos(theta)
+y1 = r * sin(theta)
+
+x3 = r * cos(theta)^3
+y3 = r * sin(theta)^3
+
+x_6 = r *sign(cos(theta))* cos(theta)^6
+y_6 = r *sign(sin(theta))* sin(theta)^6
+
+plot(x1,y1,cex = 0.3,pch = 16,asp = 1,main = "一般类型曲线")
+points(x3,y3,cex =0.3,pch  =16,col = "red")
+points(x_6,y_6,cex = 0.3,pch = 16,col = "steelblue")
+points(x_05,y_05,cex = 0.3,pch = 16,col = "darkgreen")
+```
+
+#### 分析性质
+
+考试主要计算星型线的面加.这里简要介绍计算流程 1. 首先,将图形分别在4个象限分为4个部分.接着计算第一象限的面积.此时极坐标下的被积区域为 $$
+D' = \{ 0 \le \theta \le \frac{\pi}{2},
+0 \le r \le r_0 
+\}$$
+
+2.  利用`Jacobi`行列式将直角坐标系下的面加变为极坐标下计算.
+
+$$
+\int\!\!\!\int d \sigma  = 12\int_0^{{\pi  \over 2}} {{{(sin(\theta )cos(\theta ))}^2}d} \theta \int_0^{{r_0}} {rdr}  = {{3\pi {r_0}^2} \over 8}
+$$ 这是使用极坐标变换以及二重积分计算图像面加.在后面我们将采用`Green`公式将二重积分转化为第二类曲线积分进行计算.
+
+## 3.玫瑰线
+
+$$
+r = asin(3\theta)
+$$ ,or $$
+r = a cos(\theta)
+$$
+
+#### 几何图形
+
+```{r,fig.align = "center"}
+a = 2
+theta = adapt_x(N,-pi,pi)
+r = a* sin(3*theta)
+x = r * cos(theta)
+y = r * sin(theta)
+plot(x,y,cex = 0.3,pch = 16,asp = 1,main = "玫瑰线",
+     sub = TeX("$r = a sin(3\\theta)$"),xlab = "",ylab = "")
+abline(a = 0,b = tan(pi/6),col = "red",lty = 3)
+abline(a = 0,b = tan(5*pi/6),col = "red",lty = 3)
+abline(a = 0,b = tan(3*pi/2),col = "red",lty = 3)
+abline(a = 0,b = 0,col = "blue",lty = 4)
+abline(a = 0,b = tan(pi/3),col = "blue",lty = 4)
+```
+
+我们需要注意玫瑰线的$\theta$取值范围.$[0,\pi/3],[2\pi/3,5\pi/6],[4\pi/3,5\pi/3]$.并且这些取值范围的边界点都是玫瑰线的切线方向.
+
+## 4.螺旋形
+
+$$
+ r = a\theta
+$$
+
+#### 几何图形
+
+```{r,fig.align='center'}
+a = 2
+theta = adapt_x(N,0,2*pi)
+r = a * theta
+x = r * cos(theta)
+y = r * sin(theta)
+
+plot(x,y,cex = 0.3,pch = 16,asp = 1,main = "螺旋线",
+     sub = TeX("$r = a \\theta)$"),xlab = "",ylab = "")
+
+```
+
+## 5.摆线
+
+$$
+ x = r(t - sin(t)),y = r (1 - cos(t))
+$$
+
+#### 几何图形
+
+```{r,fig.align='center'}
+r = 2
+theta = adapt_x(N,0,2*pi)
+x = r*(theta - sin(theta))
+y = r*(1 - cos(theta))
+plot(x,y,cex = 0.3,pch = 16,asp = 1,main = "摆线",
+     sub = TeX("$x=r(t-sin(t)),y=r(1-cos(t))$"),xlab = "",ylab = "")
+
+```
+
+#### 分析性质
+
+考试中常见的问题是计算摆线与x轴围成的面积.下面给出简单的计算流程. 1. 使用`Green公式`计算: 首先补充图形,让其变成一个封闭曲线.然后计算封闭曲线的第二类曲线积分,被积函数为$p = 0,Q = x$.
+
+$$\mathop{{\int\!\!\!\!\!\int}\mkern-21mu \bigcirc}\limits_D 
+ {{{\partial Q} \over {\partial x}}}  - {{\partial P} \over {\partial y}}d\sigma  = \oint\limits_{\partial D} {Pdx + Qdy = \oint\limits_{\partial D} {xdy = } } \int_{2\pi }^0 {(t - \sin (t))sin(t)dt}  \tag{1}
+ $$
+
+$$\int_0^{2\pi } {(t - \sin (t))sin(t)dt}  =  - 3\pi \tag{2} $$
+
+趣闻: 这个问题显然需要用到微积分工具,但是历史上,伽利略也解决过此问题.当时微积分并没有发展起来,他采用的"物理"方法.做出一个摆线的模型,然后测量其重量,得到最后面积为$3\pi$.
