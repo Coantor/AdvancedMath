@@ -6,7 +6,7 @@ f = function(x){
   d[d > pi/2] = d[d > pi/2] - pi
   return(d)
 }
-n = 15
+n = 20
 ## 产生随机颜色
 set.seed(10)
 
@@ -31,7 +31,8 @@ for(i in 2:n){
     return(s)
   }
 }
-plot(x,y_real,type = "l" ,lwd = 2,ylab = "y",main = "fourier展开")
+plot(x,y_real,type = "l" ,lwd = 2,ylab = "y",main = "fourier展开",
+     ylim = c(-1.8,1.8))
 abline(h = 0,col = "blue",lwd= 1.3,lty = 2)
 ## 产生随机颜色发生器
 Init_color_eng()
