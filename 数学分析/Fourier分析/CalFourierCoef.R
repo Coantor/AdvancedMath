@@ -1,4 +1,7 @@
 ## 此脚本用于计算傅里叶系数
+Rcpp::sourceCpp('Adapt_integrate_cpp.cpp')
+
+
 Cal_Fourier_Coef <- function(f,n = 20,from = -pi,to = pi){
   mat = matrix(0,ncol = 2,nrow = n)
   for(i in 1:n){
@@ -7,6 +10,17 @@ Cal_Fourier_Coef <- function(f,n = 20,from = -pi,to = pi){
     }
   return(mat)
 }
+
+Cal_Fourier_Coef_cpp <- function(f,n = 20,from = -pi,to = pi){
+  mat = matrix(0,ncol = 2,nrow = n)
+  for(i in 1:n){
+    # 下面使用CPP计算积分系数
+    mat[i,1] = Integrate_cpp(func = \(x){f(x)*cos(i*x)/pi},low = from,up = to,n = 100)
+    mat[i,2] = Integrate_cpp(func = \(x){f(x)*sin(i*x)/pi},low = from,up = to,n = 100)
+  }
+  return(mat)
+}
+
 
 ##产生颜色选择器
 Init_color_eng <- function(){
