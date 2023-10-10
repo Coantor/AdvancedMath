@@ -3,6 +3,7 @@
 #include"cmath"
 #include"fstream" //输入数据进入文本
 #define PI acos(-1) //定义pi
+// S = {m * a + n * b| m,n 为整数} ,伪证
 using namespace std;
 
 void func01()

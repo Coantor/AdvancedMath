@@ -27,7 +27,10 @@ double Integrate_cpp(Function func,double low,double up,int n = 20)
   double h = (up - low)/n; //计算每一隔
   double s = 0, a = low, b = a + h; //积分值
   for(int i = 0; i < n;i ++){
-    s += Integrate(func,a,b);
+    double x1 =  Rcpp::as<double>( func(a) );
+    double  x2 =  Rcpp::as<double>( func((a + b)/2) );
+    double x3 =  Rcpp::as<double>( func(b) );
+    s += (x1 + 4*x2 +x3) * h /6.0;
     a = a + h;
     b = b + h;
   }
