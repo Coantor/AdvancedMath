@@ -1,5 +1,4 @@
 import numpy as np
-# 统计函数
 from collections import Counter
 
 Error = 1e-8
@@ -15,7 +14,7 @@ def Calc_Rank(a:np.array,n:int):
     rank_a = list()
     b = np.eye(a.shape[0])
     for i in range(n+1):
-        r = np.linalg.matrix_rank(b)
+        r = np.linalg.matrix_rank(b) #计算矩阵的秩
         if i >0 and r == rank_a[-1]:
             rank_a.append(r)
             break
@@ -45,7 +44,7 @@ def Get_Jordan_chunck(lambda_val:np.float_,n:int):
     return Jordan_chunck
 
 def Calc_JordanStandard(a:np.array):
-    eigvals = np.linalg.eigvals(a)
+    eigvals = np.linalg.eigvals(a) #QR
     Filter_val(eigvals)
     ## 统计数字
     Counter_eigvals = Counter(eigvals)
