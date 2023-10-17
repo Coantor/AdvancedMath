@@ -1,7 +1,6 @@
 ## 此脚本用于计算傅里叶系数
 Rcpp::sourceCpp('Adapt_integrate_cpp.cpp')
 
-
 Cal_Fourier_Coef <- function(f,n = 20,from = -pi,to = pi){
   mat = matrix(0,ncol = 2,nrow = n)
   for(i in 1:n){

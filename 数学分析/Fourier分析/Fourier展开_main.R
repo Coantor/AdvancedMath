@@ -4,6 +4,14 @@
 f = function(x){
   d = sin(x)/x
   d[is.nan(d)] = 1
+  ## 
+  d = x
+  d[x>pi] = d[x>pi] - pi*2
+  d[x< -pi] = d[x< -pi] + pi*2
+  
+  ## 
+  d = pi/2 -x
+  d[x < 0] = pi - d[x<0]
   return(d)
 }
 n = 10
