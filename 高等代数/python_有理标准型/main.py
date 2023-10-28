@@ -2,7 +2,7 @@ from Polynomial import *
 import numpy as np
 import pandas as pd
 
-np.seterr(divide='ignore',invalid='ignore') #不报错就是没有错
+np.seterr(divide='ignore',invalid='ignore')
 
 if __name__ == "__main__":
     p1 = Mat_to_LambdaMat(np.eye(4))
@@ -54,6 +54,7 @@ if __name__ == "__main__":
     print("")
     print("p6矩阵对应lambda矩阵的不变因子组")
     print(LambdaInvariantFac(p6))
+    print(np.array([[0,1,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,1]]))
     print("")
     print(FrobeniusStandard(p6))
     print("p7矩阵对应的Frobenuis标准型")
