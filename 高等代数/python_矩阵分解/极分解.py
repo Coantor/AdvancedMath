@@ -22,5 +22,3 @@ print(c)
 print("-"*40)
 print("判断c是否半正定矩阵")
 print([np.linalg.det(c[:i,:i]) for i in range(1,a.shape[0]+1)])
-
-
