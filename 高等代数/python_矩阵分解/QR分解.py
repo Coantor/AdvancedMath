@@ -1,6 +1,4 @@
-import aifc
 import numpy as np
-import copy
 
 a = np.round(np.random.rand(4,4)*10,1)
 a = np.array([[1,1,1],[2,3,1],[2,1,-5]])
