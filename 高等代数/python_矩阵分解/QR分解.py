@@ -1,3 +1,4 @@
+import aifc
 import numpy as np
 import copy
 
@@ -49,29 +50,21 @@ def HouseholderQR(a:np.array) ->tuple :
     使用HouseHolder变换进行QR分解
     """
     assert a.shape[0] == a.shape[1]
-    Q = np.eye(a.shape[0],a.shape[0])
-    R = copy.copy(a)
-    for i in range(a.shape[0]-1):
-        ds = np.zeros(a.shape[0]-i) ##需要转化的第一个向量
-        ds[0] = np.linalg.norm(R[i:,i])
-        
-        ws = R[i:,i] - ds #给出差向量,通过差向量计算正交矩阵
+    n = a.shape[1]  # 取出矩阵的规格
+    Q = np.eye(n)  # 获得正交矩阵
+    R = np.zeros((n, n))  # 最终的上三角矩阵
+    for i in range(n - 1):
+        x = a[i:, i]  # 取出第i列,逐渐变小的矩阵
+        y = np.zeros(n - i);
+        y[0] = np.sqrt(np.dot(x, x))
+        Qs = Householder(x-y)  # 就是Qs矩阵
+        Q_full = np.eye(n)
+        Q_full[i:,i:] = Qs
+        Q = Q_full @ Q
+        R = Q @ a
 
-        #breakpoint()
-        Qs = Householder(ws)
-        print(Qs)
-        R[i:,i:] = np.dot(Qs,R[i:,i:])
-        ## 在将Qs拼成V上的正交矩阵
-        Qraw = np.eye(a.shape[0],a.shape[0])
-        Qraw[i:,:][:,i:] = Qs
-        print(R)
-        ## 更新Q与R
-        #breakpoint()
-        Q = Qraw @ Q
+    # 最终矩阵需要转置
     return(Q.T,R)
-
-
-    return(Q,R)
 
 if __name__ == "__main__":
     (Q,R) = HouseholderQR(a)
