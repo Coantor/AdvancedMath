@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 #print(Normal)
 #%% 测试误差
 def TestResidue()->None:
+    N = 8
     residue = list()
     m = 100
     for i in range(m):
@@ -92,7 +93,8 @@ def FacReflectMat(Normal:np.array,Base:np.array):
 
 #%% 主程序
 if __name__ == "__main__":
-    N = 6
+    #TestResidue()
+    N = 8
     np.random.seed(123)
     a = np.round(np.random.rand(N,N)*10,0)
     a = np.linalg.qr(a)[0]
@@ -101,7 +103,6 @@ if __name__ == "__main__":
     (Normal,Base) = CalcNormStandard(a)
     Reflect = FacReflectMat(Normal,Base)
     
-
     s = np.eye(N)
     for i in range(len(Reflect)):
         vals = np.linalg.eigvals(Reflect[i])
