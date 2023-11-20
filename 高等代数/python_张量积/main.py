@@ -14,14 +14,18 @@ def KroneckerDot(mat1:np.array,mat2:np.array):
             mat3[k1:k2,l1:l2] = mat1[i,j]*mat2
     return mat3
 
-A = np.array([1,2,3,4]).reshape((2,2))
-B = np.random.rand(4,4)
+a1 = 3
+a2 = 2
+a3 = 7
+A = np.array([0,0,a1,1,0,a2,0,1,a3]).reshape((3,3))
+B = A.copy()
 C =KroneckerDot(A,B)
-
+print(A)
 ## 验证A,B,C特征值的关系
 eigvals1 = np.linalg.eigvals(A)
 eigvals2 = np.linalg.eigvals(B)
 eigvals3 = np.linalg.eigvals(C)
+print(C)
 
 np.set_printoptions(precision=4)
 
